@@ -66,11 +66,11 @@ def update_p(p_0, cards, v, learning_rate, win_rate):
     t_0_ev = ev(cards, p_0)
     while i < len(p_0):
         if(t_0_ev > v*win_rate) :
-            if(cards[i][1] >= v):
+            if(cards[i][1] >= v*win_rate): #added winrate to if statement
                 p_1[i] = p_1[i] - learning_rate
                 sum_delta += learning_rate
         else:
-            if(cards[i][1] <= v):
+            if(cards[i][1] <= v*win_rate): #added winrate to if statement
                 p_1[i] = p_1[i] - learning_rate
                 sum_delta += learning_rate
         i = i + 1
