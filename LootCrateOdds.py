@@ -104,5 +104,6 @@ cards = [('c1', 1), ('c2', 2), ('c3', 3), ('c4', 4), ('c5', 5), ('c6', 10)]
 winrate=0.9
 new_p = odds(cratePrice, cards, 0.001, 900, winrate)
 print(new_p)
-print(cratePrice*winrate)
-print(ev(cards, new_p))
+print(f"list sum: {sum(new_p)}")
+print(f"Desiered return: {cratePrice*winrate}")
+print(f"expected value: {ev(cards, new_p)}")
