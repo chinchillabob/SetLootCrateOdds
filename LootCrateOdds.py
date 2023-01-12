@@ -2,7 +2,6 @@ import pandas as pd
 import random 
 import matplotlib as plt
 import numpy as np
-from tkinter import *
 
 #show the variance and number of crates to converge
 
@@ -66,13 +65,17 @@ def update_p(p_0, cards, v, learning_rate, win_rate):
     t_0_ev = ev(cards, p_0)
     while i < len(p_0):
         if(t_0_ev > v*win_rate) :
-            if(cards[i][1] >= v*win_rate): #added winrate to if statement
-                p_1[i] = p_1[i] - learning_rate
-                sum_delta += learning_rate
+            if(cards[i][1] >= v*win_rate):
+                t = learning_rate * v * win_rate
+                if(p_0[i] - t >= 0):#makes sure that odds do not become negative
+                    p_1[i] = p_1[i] - t
+                    sum_delta += t
         else:
-            if(cards[i][1] <= v*win_rate): #added winrate to if statement
-                p_1[i] = p_1[i] - learning_rate
-                sum_delta += learning_rate
+            if(cards[i][1] <= v*win_rate): 
+                t = learning_rate * v * win_rate
+                if(p_0[i]-t >= 0):#makes sure that odds do not become negative
+                    p_1[i] = p_1[i] - t
+                    sum_delta += t
         i = i + 1
     p_1 = redistributeDelta(sum_delta, p_0, p_1, cards, v, win_rate)
     return p_1
@@ -99,10 +102,10 @@ def odds(value, cards, learning_rate, max_iter, win_rate):
 #for any crate price
 cratePrice = 3.5
 #add any amount of cards
-cards = [('c1', 1), ('c2', 2), ('c3', 3), ('c4', 4), ('c5', 5), ('c6', 10)]
+cards = [('c6', 6), ('c7', 7), ('c8', 8), ('c9', 9), ('c10', 10), ('c1', 1), ('c2', 2), ('c3', 3), ('c4', 4), ('c5', 5)]
 #winrate =0.9 means that the ev for the house should be 10% of the cost of the crate
-winrate=0.9
-new_p = odds(cratePrice, cards, 0.001, 900, winrate)
+winrate=0.75
+new_p = odds(cratePrice, cards, 0.00005, 30000, winrate)
 print(new_p)
 print(f"list sum: {sum(new_p)}")
 print(f"Desiered return: {cratePrice*winrate}")
