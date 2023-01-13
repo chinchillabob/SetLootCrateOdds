@@ -2,6 +2,7 @@ import pandas as pd
 import random 
 import matplotlib as plt
 import numpy as np
+from tkinter import *
 
 #show the variance and number of crates to converge
 
@@ -66,13 +67,13 @@ def update_p(p_0, cards, v, learning_rate, win_rate):
     while i < len(p_0):
         if(t_0_ev > v*win_rate) :
             if(cards[i][1] >= v*win_rate):
-                t = learning_rate * v * win_rate
+                t = learning_rate #* v * win_rate
                 if(p_0[i] - t >= 0):#makes sure that odds do not become negative
                     p_1[i] = p_1[i] - t
                     sum_delta += t
         else:
             if(cards[i][1] <= v*win_rate): 
-                t = learning_rate * v * win_rate
+                t = learning_rate #* v * win_rate
                 if(p_0[i]-t >= 0):#makes sure that odds do not become negative
                     p_1[i] = p_1[i] - t
                     sum_delta += t
